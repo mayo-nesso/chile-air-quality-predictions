@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "chile-air-quality-predictions"
+version = "0.1.0"
+description = "Little ML Project that makes a prediction for the next 24h on Chile's air quality based on past observations."
+authors = ["Mayo Nesso <mayofunk@hotmail.com>"]
+readme = "README.md"
+packages = [{include = "chile_air_quality_predictions"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+pandas = "^2.1.2"
+numpy = "^1.26.1"
+seaborn = "^0.13.0"
+ipywidgets = "^8.1.1"
+matplotlib = "^3.8.1"
+ipykernel = "^6.26.0"
+folium = "^0.14.0"
+colour = "^0.1.5"
+itables = "^1.6.2"
+pyarrow = "^14.0.0"
+utm = "^0.7.0"
+scikit-learn = "1.2.2"
+tensorflow-metal = {markers = "sys_platform == \"darwin\" and platform_machine == \"arm64\"", version = "^1.1.0"}
+tensorflow-macos = "^2.14.0"
+pycaret = "2.0"
+nbformat = "4.2.0"
+shapely = "^2.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
