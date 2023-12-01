@@ -217,63 +217,6 @@ def save_interim_data(df: pd.DataFrame, filename: str):
     df.to_feather(destination_path)
 
 
-# def get_na_length_mean(df: pd.DataFrame, pollutant: str) -> float:
-#     """
-#     Calculate the mean duration of continuous NaN values for a specified pollutant.
-
-#     Parameters
-#     ----------
-#     df : pd.DataFrame
-#         Input DataFrame containing the pollutant column.
-#     pollutant : str
-#         The name of the pollutant column for which to calculate NaN durations.
-
-#     Returns
-#     -------
-#     float
-#         The mean duration of continuous NaN values for the specified pollutant.
-#     """
-#     # Identify NaN values in the pollutant column
-#     na_values = df[pollutant].isna()
-
-#     # Find continuous occurrences of NaN and calculate their duration
-#     na_sequences = (na_values != na_values.shift()).cumsum()
-#     na_durations = na_values.groupby(na_sequences).transform("size") * na_values
-
-#     # Since `na_durations` is a sequence of durations, like
-#     # [0, 4,4,4,4 , 0, 0 ,0 , 2,2, 0, 1, 0]
-#     # we will "compress" the array to get only one digit per sequence.
-#     compressed = compress_array(na_durations)
-
-#     # Discard any 0 na_duration (i.e., uptime)
-#     only_na_durations = compressed[compressed != 0]
-
-#     # # Calculate the mean duration of continuous NaN occurrences
-#     na_length_mean = only_na_durations.mean()
-#     return na_length_mean
-
-
-# def compress_array(arr: np.ndarray) -> np.ndarray:
-#     """
-#     Compresses an array by keeping only the first occurrence of each unique value.
-
-#     Parameters:
-#     - arr (numpy.ndarray): The input array to be compressed.
-
-#     Returns:
-#     - numpy.ndarray: The compressed array containing only the first occurrence of each unique value.
-
-#     Example:
-#     >>> original_array = np.array([1, 1, 2, 2, 2, 3, 4, 4, 4, 4, 5, 5, 6])
-#     >>> compress_array(original_array)
-#     array([1, 2, 3, 4, 5, 6])
-#     """
-#     # Find where the array changes, we use values to avoid working with index
-#     changes = np.concatenate(([True], arr[:-1].values != arr[1:].values))
-#     result_array = arr[changes]
-#     return result_array.reset_index(drop=True)
-
-
 def get_na_percentage(df: pd.DataFrame, pollutant: str) -> float:
     """
     Calculate the percentage of missing values for a specified pollutant.
