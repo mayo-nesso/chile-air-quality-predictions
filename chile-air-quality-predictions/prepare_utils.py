@@ -1,6 +1,5 @@
 import math
 import os
-import warnings
 from datetime import datetime
 from typing import Dict
 
@@ -27,7 +26,6 @@ def create_na_heatmap_plot(df: pd.DataFrame):
         df (pd.DataFrame): The dataframe with the data.
 
     """
-
     def _interactive_na_heatmap(station):
         data = df.query("Station == @station").isnull()
         try:
@@ -92,7 +90,6 @@ def calculate_mae_for_station_using_mean(df: pd.DataFrame, target: str) -> tuple
         - model: Trained imputation model (SimpleImputer)
         - mean_errors: Dictionary with mean error metrics (MAE, RMSE, MAPE)
     """
-    warnings.filterwarnings("ignore")
     df2 = df.dropna(inplace=False)
     train_df, test_df = train_test_split(df2, test_size=0.2, random_state=42)
 
@@ -127,7 +124,6 @@ def calculate_mae_for_station_using_mode(df: pd.DataFrame, target: str) -> tuple
         - model: Trained imputation model (SimpleImputer)
         - mean_errors: Dictionary with mean error metrics (MAE, RMSE, MAPE)
     """
-    warnings.filterwarnings("ignore")
     df2 = df.dropna(inplace=False)
     train_df, test_df = train_test_split(df2, test_size=0.2, random_state=42)
 
@@ -164,7 +160,6 @@ def calculate_mae_for_station_using_lr(df: pd.DataFrame, independent: str, targe
         - model: Trained linear regression model (LinearRegression)
         - mean_errors: Dictionary with mean error metrics (MAE, RMSE, MAPE)
     """
-    warnings.filterwarnings("ignore")
     df2 = df.copy()
     df2[independent] = df2[independent].bfill()
     df2 = df.dropna(inplace=False)
@@ -441,7 +436,6 @@ def visualize_missing_values_estimation_pm25(df: pd.DataFrame, day: datetime):
         df (pd.DataFrame): The dataframe
         day (datetime): The chosen day to plot
     """
-    warnings.filterwarnings("ignore")
 
     day = day.date()
 
@@ -565,7 +559,6 @@ def visualize_missing_values_estimation_pm10(df: pd.DataFrame, day: datetime):
         df (pd.DataFrame): The dataframe
         day (datetime): The chosen day to plot
     """
-    warnings.filterwarnings("ignore")
 
     day = day.date()
 
@@ -727,7 +720,6 @@ def impute_pollutant_missing_values_with_knn(
     imputed_flag = df_with_missing[[pollutant]]
 
     # Disable warnings
-    warnings.filterwarnings("ignore")
 
     # Create a flag column for the pollutant
     imputed_flag[f"{pollutant}_imputed_flag"] = np.where(
