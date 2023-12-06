@@ -4,7 +4,6 @@ from os import path
 from typing import Any, Dict, List, Optional
 
 import folium
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from colour import Color
@@ -73,8 +72,7 @@ def create_heat_map(
     df_day: datetime,
     dlat: float,
     dlon: float,
-    target_pollutant: str = "PM2.5",
-    popup_plots: bool = False,
+    target_pollutant: str = "PM2.5"
 ) -> folium.Map:
     """Creates a heat map of predicted pollutant values based on the neighboring stations
 
@@ -126,12 +124,11 @@ def create_heat_map(
         else:
             bg_color = "white"
             interpolated = ""
-        if popup_plots:
-            popup_text = f"<img src='img/tmp/{station['Station']}.png'>"
-        else:
-            popup_text = (
-                f"{station['Station']}:\n{'{:.2f}'.format(station[target_pollutant])}{interpolated}"
-            )
+
+        popup_text = (
+            f"{station['Station']}:\n{'{:.2f}'.format(station[target_pollutant])}{interpolated}"
+        )
+
         fg.add_child(
             folium.CircleMarker(
                 location=[station["Latitude"], station["Longitude"]],
@@ -282,18 +279,6 @@ def create_heat_map_with_date_range(
     df_days = df[df["DateTime"] >= start_date]
     df_days = df_days[df_days["DateTime"] <= end_date]
 
-    for key in df_days.Station.unique():
-        dates = df_days[df_days["Station"] == key]["DateTime"]
-        plt.plot(dates, df_days[df_days["Station"] == key][target_pollutant], "-o")
-        plt.plot(dates, [12] * len(dates), "--g", label="recommended level")
-        plt.title(f"Station {key}")
-        plt.xlabel("hour")
-        plt.ylabel(f"{target_pollutant} concentration")
-        plt.legend(loc="upper left")
-        plt.xticks(rotation=30)
-        plt.savefig(f"img/tmp/{key}.png")
-        plt.clf()
-
     k = k_neighbors
     neigh = KNeighborsRegressor(n_neighbors=k, weights="distance", metric=distance_metric)
     # Filter a single time step
@@ -302,9 +287,7 @@ def create_heat_map_with_date_range(
 
     predictions_xy, dlat, dlon = predict_on_rm(neigh, 64)
 
-    map_hooray = create_heat_map(
-        predictions_xy, df_day, dlat, dlon, target_pollutant, popup_plots=True
-    )
+    map_hooray = create_heat_map(predictions_xy, df_day, dlat, dlon, target_pollutant)
 
     return map_hooray
 
