@@ -4,6 +4,8 @@
 
 This repository contains a series of Jupyter notebooks focused on predicting air quality (PM2.5) levels for areas near air monitoring stations in the Area Metropolitana de Santiago de Chile.
 
+![PM2.5 Map on Santiago, Chile](./imgs/SCL_PM2.5_MAP.jpg)
+
 ## Getting Started
 
 ### Installation
@@ -39,6 +41,8 @@ This repository contains a series of Jupyter notebooks focused on predicting air
 
 - File: [3_predict.ipynb](chile_air_quality_predictions/3_predict.ipynb)
 - Description: The final notebook focuses on predicting PM2.5 levels for areas close to air monitoring stations. It involves choosing and tuning a predictive model, visualizing results, and exploring potential improvements.
+
+![Timelapse](./imgs/SCL_PM2.5_TIMELAPSE.gif)
 
 ## Future Improvements
 
